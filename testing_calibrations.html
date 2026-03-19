@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Calibrations S.A.C. | Ingeniería y Metrología de Precisión</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --primary: #1B4E75;    /* Azul Petróleo Corporativo */
+            --primary-light: #2c6a99;
+            --accent: #E67E22;     /* Naranja Metrología */
+            --accent-dark: #D35400;
+            --dark: #0F172A;
+            --light: #F8FAF C;
+            --glass: rgba(255, 255, 255, 0.92);
+            --gradient-blue: linear-gradient(135deg, #1B4E75 0%, #082F49 100%);
+            --shadow-premium: 0 20px 50px rgba(15, 23, 42, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #334155; 
+            background-color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVEGACIÓN DE ALTO NIVEL --- */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 2000;
+            background: var(--glass); backdrop-filter: blur(20px);
+            padding: 20px 8%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(27, 78, 117, 0.08);
+            transition: 0.4s all;
+        }
+
+        header.scrolled { padding: 12px 8%; box-shadow: var(--shadow-premium); }
+
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { 
+            background: var(--gradient-blue); width: 45px; height: 45px; 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.2rem; transform: rotate(-5deg);
+        }
+        .logo-text { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--primary); font-size: 1.5rem; letter-spacing: -0.5px; }
+
+        nav { display: flex; gap: 40px; align-items: center; }
+        .nav-link { 
+            position: relative; text-decoration: none; color: var(--dark); 
+            font-weight: 700; font-size: 0.9rem; transition: 0.3s;
+        }
+        .nav-link:hover { color: var(--accent); }
+
+        /* Mega Dropdown Estilo Profesional */
+        .has-dropdown { position: relative; padding: 10px 0; }
+        .dropdown {
+            position: absolute; top: 100%; left: -50%; width: 320px;
+            background: white; border-radius: 16px; padding: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            opacity: 0; visibility: hidden; transform: translateY(15px);
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px;
+            text-decoration: none; color: #475569; border-radius: 10px; transition: 0.3s;
+        }
+        .dropdown-item:hover { background: #F1F5F9; color: var(--primary); }
+        .dropdown-item i { width: 35px; height: 35px; background: #E2E8F0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
+
+        .btn-quote {
+            background: var(--accent); color: white; padding: 12px 28px; border-radius: 50px;
+            font-weight: 800; text-decoration: none; font-size: 0.85rem; transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(230, 126, 34, 0.2);
+        }
+        .btn-quote:hover { background: var(--accent-dark); transform: scale(1.05); }
+
+        /* --- HERO SECTION MODERNA --- */
+        .hero {
+            height: 100vh; background: var(--gradient-blue); position: relative;
+            display: flex; align-items: center; padding: 0 8%; color: white; overflow: hidden;
+        }
+        .hero-shapes div { position: absolute; border-radius: 50%; background: white; opacity: 0.03; }
+        .shape-1 { width: 600px; height: 600px; top: -200px; right: -100px; }
+        .shape-2 { width: 400px; height: 400px; bottom: -100px; left: -50px; }
+
+        .hero-content { max-width: 850px; position: relative; z-index: 10; }
+        .badge { 
+            background: rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 50px;
+            display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2); margin-bottom: 25px;
+        }
+        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 5rem; line-height: 1; margin-bottom: 25px; font-weight: 800; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { font-size: 1.3rem; opacity: 0.8; margin-bottom: 40px; max-width: 650px; }
+
+        /* --- SECCIONES DE CONTENIDO EXPANDIDO --- */
+        .section { padding: 120px 8%; position: relative; }
+        .bg-white { background: white; }
+        
+        .section-header { text-align: center; max-width: 800px; margin: 0 auto 80px; }
+        .section-header h2 { font-size: 3rem; color: var(--primary); font-family: 'Outfit', sans-serif; margin-bottom: 20px; }
+        .section-header p { font-size: 1.1rem; color: #64748B; }
+
+        /* Servicios Grid */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .s-card {
+            background: white; padding: 50px; border-radius: 30px; border: 1px solid #E2E8F0;
+            transition: 0.5s all; position: relative; overflow: hidden;
+        }
+        .s-card:hover { transform: translateY(-15px); border-color: var(--accent); box-shadow: var(--shadow-premium); }
+        .s-card i { font-size: 3rem; color: var(--accent); margin-bottom: 30px; display: block; }
+        .s-card h3 { font-size: 1.6rem; color: var(--primary); margin-bottom: 20px; }
+        .s-card ul { list-style: none; }
+        .s-card li { margin-bottom: 12px; display: flex; align-items: center; gap: 12px; font-weight: 500; }
+        .s-card li i { font-size: 1rem; color: var(--accent); margin: 0; }
+
+        /* --- SECCIÓN SOBRE NOSOTROS (ESTILO RD RENTAL) --- */
+        .about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-img { position: relative; }
+        .about-img img { width: 100%; border-radius: 40px; box-shadow: var(--shadow-premium); }
+        .experience-box {
+            position: absolute; bottom: -30px; right: -30px; background: var(--accent);
+            padding: 40px; border-radius: 30px; color: white; text-align: center;
+        }
+        .experience-box h4 { font-size: 3rem; font-weight: 800; line-height: 1; }
+
+        /* --- PROCESO TÉCNICO --- */
+        .process-line { display: flex; justify-content: space-between; margin-top: 60px; position: relative; }
+        .process-line::before { content: ''; position: absolute; top: 40px; left: 0; width: 100%; height: 2px; background: #E2E8F0; z-index: 1; }
+        .p-item { flex: 1; text-align: center; position: relative; z-index: 2; padding: 0 10px; }
+        .p-icon { 
+            width: 80px; height: 80px; background: white; border: 2px solid #E2E8F0; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 25px; font-size: 1.5rem; color: var(--primary); transition: 0.4s;
+        }
+        .p-item:hover .p-icon { border-color: var(--accent); color: var(--accent); transform: scale(1.1); }
+
+        /* --- FOOTER ROBUSTO --- */
+        footer { background: var(--dark); color: white; padding: 120px 8% 40px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 80px; margin-bottom: 80px; }
+        .f-logo { font-size: 2rem; font-weight: 800; margin-bottom: 25px; display: block; }
+        .footer-col h5 { font-size: 1.1rem; color: var(--accent); margin-bottom: 35px; text-transform: uppercase; letter-spacing: 2px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 18px; opacity: 0.7; font-size: 0.95rem; display: flex; gap: 15px; }
+        .footer-col a { color: white; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--accent); padding-left: 8px; }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3.5rem; }
+            .about-split { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="mainHeader">
+        <a href="#" class="logo-area">
+            <div class="logo-icon"><i class="fas fa-microscope"></i></div>
+            <span class="logo-text">TESTING CALIBRATIONS</span>
+        </a>
+        <nav>
+            <a href="#inicio" class="nav-link">Inicio</a>
+            <div class="has-dropdown">
+                <a href="#nosotros" class="nav-link">La Empresa <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i></a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-item"><i class="fas fa-bullseye"></i> <div><strong>Misión y Visión</strong><small>Nuestros objetivos estratégicos</small></div></a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-shield-alt"></i> <div><strong>Valores</strong><small>Ética e Integridad técnica</small></div></a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-file-contract"></i> <div><strong>Políticas</strong><small>Calidad e Imparcialidad</small></div></a>
+                </div>
+            </div>
+            <div class="has-dropdown">
+                <a href="#servicios" class="nav-link">Servicios Especializados <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i></a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-item"><i class="fas fa-gas-pump"></i> <div><strong>Analizadores de Gases</strong><small>Calibración vehicular certificada</small></div></a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-car-side"></i> <div><strong>Línea de CITV</strong><small>Equipos de inspección técnica</small></div></a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-tools"></i> <div><strong>Soporte Técnico</strong><small>Mantenimiento y consultoría</small></div></a>
+                </div>
+            </div>
+            <a href="#contacto" class="nav-link">Contacto</a>
+            <a href="#" class="btn-quote">SOLICITAR COTIZACIÓN</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-shapes">
+            <div class="shape-1"></div>
+            <div class="shape-2"></div>
+        </div>
+        <div class="hero-content">
+            <div class="badge animate__animated animate__fadeInDown">COMPROMISO CON LA PRECISIÓN</div>
+            <h1 class="animate__animated animate__fadeInLeft">Ingeniería que garantiza <span>Resultados Exactos</span></h1>
+            <p class="animate__animated animate__fadeInLeft animate__delay-1s">Laboratorio especializado en calibración metrológica bajo la norma NTP ISO/IEC 17025. Aseguramos la confiabilidad en mediciones de gases vehiculares y equipos CITV.</p>
+            <div class="animate__animated animate__fadeInUp animate__delay-1s" style="display: flex; gap: 20px;">
+                <a href="#servicios" class="btn-quote" style="padding: 18px 45px; font-size: 1rem;">Explorar Soluciones</a>
+                <a href="#nosotros" class="btn-quote" style="background: transparent; border: 2px solid white; box-shadow: none;">Conoce la Empresa</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-white" id="nosotros">
+        <div class="about-split">
+            <div class="about-img animate__animated animate__fadeInLeft">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" alt="Laboratorio Técnico">
+                <div class="experience-box">
+                    <h4>+15</h4>
+                    <p>Años de<br>Experiencia</p>
+                </div>
+            </div>
+            <div class="about-text">
+                <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px;">SOBRE NOSOTROS</span>
+                <h2 style="margin-top: 15px;">Líderes en Calibración de Analizadores de Gases</h2>
+                <p>Testing Calibrations S.A.C. es un laboratorio de vanguardia comprometido con la calidad técnica y el cumplimiento normativo[cite: 5]. Implementamos procesos estandarizados que aseguran resultados precisos, confiables y con plena trazabilidad metrológica[cite: 6, 7].</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px;">
+                    <div>
+                        <h4 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-bullseye"></i> Misión</h4>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Brindar servicios con altos estándares técnicos, garantizando exactitud y cumplimiento regulatorio[cite: 10].</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-eye"></i> Visión</h4>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Ser el referente nacional en confiabilidad de mediciones y compromiso con el medio ambiente[cite: 12].</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="servicios" style="background: #F1F5F9;">
+        <div class="section-header">
+            <h2>Nuestra Especialización Técnica</h2>
+            <p>Contamos con equipos de referencia certificados para cubrir todas las necesidades de los Centros de Inspección Técnica Vehicular[cite: 34, 81].</p>
+        </div>
+        <div class="services-grid">
+            <div class="s-card">
+                <i class="fas fa-flask"></i>
+                <h3>Analizadores de Gases</h3>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Calibración de alta precisión para el control de emisiones y protección ambiental[cite: 23, 70].</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Analizador de Gases</li>
+                    <li><i class="fas fa-check-circle"></i> Opacímetro</li>
+                    <li><i class="fas fa-check-circle"></i> Detector de Gases</li>
+                </ul>
+            </div>
+            <div class="s-card">
+                <i class="fas fa-tachometer-alt"></i>
+                <h3>Línea de Inspección</h3>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Certificación de equipos críticos para la seguridad vial y el rendimiento vehicular[cite: 24, 71].</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Frenómetro de Rodillos</li>
+                    <li><i class="fas fa-check-circle"></i> Banco de Suspensión</li>
+                    <li><i class="fas fa-check-circle"></i> Alineador de Ruedas</li>
+                </ul>
+            </div>
+            <div class="s-card">
+                <i class="fas fa-microscope"></i>
+                <h3>Instrumentación Especial</h3>
+                <p style="margin-bottom: 20px; opacity: 0.8;">Equipamiento complementario bajo normativas internacionales de metrología[cite: 28, 75].</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Regloscopio con Luxómetro</li>
+                    <li><i class="fas fa-check-circle"></i> Sonómetro Digital</li>
+                    <li><i class="fas fa-check-circle"></i> Retro-reflectómetro</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-white">
+        <div class="section-header">
+            <h2>Gestión de Mejora Continua</h2>
+            <p>Disponemos de procedimientos estrictos para garantizar la transparencia y la satisfacción de nuestros clientes[cite: 40].</p>
+        </div>
+        <div class="process-line">
+            <div class="p-item"><div class="p-icon"><i class="fas fa-edit"></i></div><h4>Recepción</h4><p style="font-size: 0.8rem; opacity: 0.7;">Registro formal de la solicitud[cite: 42].</p></div>
+            <div class="p-item"><div class="p-icon"><i class="fas fa-clipboard-list"></i></div><h4>Evaluación</h4><p style="font-size: 0.8rem; opacity: 0.7;">Análisis técnico del caso[cite: 43].</p></div>
+            <div class="p-item"><div class="p-icon"><i class="fas fa-vial"></i></div><h4>Investigación</h4><p style="font-size: 0.8rem; opacity: 0.7;">Ejecución por personal experto[cite: 44].</p></div>
+            <div class="p-item"><div class="p-icon"><i class="fas fa-sync"></i></div><h4>Acción</h4><p style="font-size: 0.8rem; opacity: 0.7;">Determinación de soluciones[cite: 45].</p></div>
+            <div class="p-item"><div class="p-icon"><i class="fas fa-check-circle"></i></div><h4>Cierre</h4><p style="font-size: 0.8rem; opacity: 0.7;">Comunicación y seguimiento[cite: 46, 47].</p></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <span class="f-logo">TESTING CALIBRATIONS</span>
+                <p style="opacity: 0.6; line-height: 1.8;">Laboratorio especializado en calibración de equipos de inspección técnica vehicular en el norte del Perú. Comprometidos con la imparcialidad y la integridad técnica[cite: 5, 14, 15].</p>
+                <div style="margin-top: 30px; display: flex; gap: 15px;">
+                    <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Navegación</h5>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Sobre Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#">Calidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Servicios</h5>
+                <ul>
+                    <li><a href="#">Gases Vehiculares</a></li>
+                    <li><a href="#">Frenómetros</a></li>
+                    <li><a href="#">Opacímetros</a></li>
+                    <li><a href="#">Sonómetros</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" id="contacto">
+                <h5>Contacto Lambayeque</h5>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> Predio Los Arenales Sub Lote B-1C, Pimentel - Chiclayo[cite: 51].</li>
+                    <li><i class="fas fa-phone" style="color: var(--accent);"></i> +51 978 444 224[cite: 51].</li>
+                    <li><i class="fas fa-envelope" style="color: var(--accent);"></i> servicios@testingcs.com[cite: 51].</li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;">
+            <p style="font-size: 0.8rem; opacity: 0.5;">&copy; 2026 Testing Calibrations S.A.C. | Laboratorio en Proceso de Acreditación ante INACAL. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto Scrolled en Header
+        window.onscroll = function() {
+            var header = document.getElementById("mainHeader");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+    </script>
+</body>
+</html>
